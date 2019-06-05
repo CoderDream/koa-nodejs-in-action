@@ -48,3 +48,11 @@ http://localhost:3000/forums/123/posts
 ```javascript
 responds to /forums/123/posts
 ```
+
+
+```javascript
+http://localhost:3000/ikamp/node
+```
+```javascript
+{ category: 'ikamp', title: 'node' }
+```
