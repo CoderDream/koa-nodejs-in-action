@@ -20,7 +20,8 @@ app.use(async (ctx, next) => {
 
 app.use(async (ctx, next) => {
     console.log('中间件2 doSomething')
-    await next();
+    // 注意，这里我们删掉了 next
+    // await next()
     console.log('中间件2 end')
 })
 
