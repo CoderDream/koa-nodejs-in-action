@@ -27,3 +27,24 @@ app.use(async (ctx, next) => {
 中间件1 end
 请求地址: /，响应时间：2ms
 ```
+
+### 多中间件
+
+```javascript
+http://localhost:3000/users/8
+```
+
+```
+server is running at http://localhost:3000
+{ id: 3, name: 'xiaoming' }
+```
+
+### 嵌套路由
+
+```javascript
+http://localhost:3000/forums/123/posts
+```
+
+```javascript
+responds to /forums/123/posts
+```
