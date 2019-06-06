@@ -1,3 +1,6 @@
+// 引入 service 文件
+const HomeService = require('../service/home')
+
 module.exports = {
     index: async(ctx, next) => {
         ctx.response.body = `<h1>index page</h1>`
@@ -28,10 +31,7 @@ module.exports = {
             name,
             password
         } = ctx.request.body
-        if (name == 'ikcamp' && password == '123456') {
-            ctx.response.body = `Hello， ${name}！`
-        } else {
-            ctx.response.body = '账号信息错误'
-        }
+        let data = await HomeService.register(name, password)
+        ctx.response.body = data
     }
 }
