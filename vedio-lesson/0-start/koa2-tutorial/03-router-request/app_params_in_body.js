@@ -1,54 +1,26 @@
+"use strict"
 
-## Http 请求
-
-### 请求参数放在 URL 后面
-
-```javascript
-http://localhost:3000/home
-```
-
-```javascript
-[Object: null prototype] {}
-```
-
-
-
-```javascript
-http://localhost:3000/home?id=12&name=ikcamp
-```
-
-```javascript
-[Object: null prototype] { id: '12', name: 'ikcamp' }
-id=12&name=ikcamp
-```
-
-### 请求参数放在 URL 中间
-
-```javascript
-http://localhost:3000/home/123/Jack
-```
-
-```javascript
-HOME page 123 Jack
-```
-
-- 控制台
-```javascript
-{ id: '123', name: 'Jack' }
-```
-
-### 请求参数放在 body 中
-
-- 先引用，再使用
-```javascript
+const Koa = require('koa')
+const router = require('koa-router')()
 const bodyParser = require('koa-bodyparser')
+const app = new Koa()
 
 // 应用bodyParser
 app.use(bodyParser())
-```
 
-- 增加表单方法和响应方法
-```javascript
+router.get('/', async (ctx, next) => {
+    ctx.response.body = `<h1>index page</h1>`
+})
+// 请求参数放在 URL 中间
+router.get('/home/:id/:name', async (ctx, next) => {
+    console.log(ctx.params)
+    ctx.response.body = '<h1>HOME page ' + ctx.params.id + ' ' + ctx.params.name + '</h1>'
+})
+
+router.get('/404', async (ctx, next) => {
+    ctx.response.body = '<h1>404 Not Found</h1>'
+})
+
 // 增加返回表单页面的路由
 router.get('/user', async (ctx, next) => {
     ctx.response.body =
@@ -72,16 +44,10 @@ router.post('/user/register', async (ctx, next) => {
         ctx.response.body = '账号信息错误'
     }
 })
-```
 
-- 浏览器URL
-```javascript
-http://localhost:3000/user
-```
+// add router middleware:
+app.use(router.routes())
 
-- 输入正确信息（ikcamp和123456）和错误信息，返回不同结果
-```javascript
-Hello， ikcamp！
-
-账号信息错误
-```
+app.listen(3000, () => {
+    console.log('server is running at http://localhost:3000')
+})
