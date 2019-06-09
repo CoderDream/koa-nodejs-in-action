@@ -5,9 +5,12 @@ const staticFiles = require('koa-static') // 引入 koa-static
 
 const miSend = require('./mi-send')
 
+// 引入日志中间件
 const miLog = require('./mi-log')
 
 module.exports = (app) => {
+    // 注册日志中间件
+    app.use(miLog())
     // 指定 public目录为静态资源目录，用来存放 js css images 等
     app.use(staticFiles(path.resolve(__dirname, "../public")))
 
@@ -18,8 +21,6 @@ module.exports = (app) => {
             trimBlocks: true // 开启转义 防Xss
         }
     }))
-
-    app.use(miLog())
 
     app.use(bodyParser())
 
